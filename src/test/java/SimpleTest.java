@@ -30,6 +30,7 @@ public class SimpleTest {
     @Test
     public void test01() {
         open("http://google.com/ncr");
+        getTimingAPI();
         getHar();
         $(By.name("q")).val("selenide").pressEnter();
         $$("#ires .g").shouldHave(size(10));
@@ -37,6 +38,13 @@ public class SimpleTest {
                 text("Selenide: concise UI tests in Java"),
                 text("selenide.org"));
         getWebDriver().quit();
+    }
+
+    private void getTimingAPI() {
+        String pageLoadTime = ((JavascriptExecutor) getWebDriver()).executeScript("return window.performance.timing.loadEventEnd - window.performance.timing.navigationStart").toString();
+        String pageLoadTiming = ((JavascriptExecutor) getWebDriver()).executeScript("return window.performance.timing").toString();
+        System.out.println(pageLoadTime);
+        System.out.println(pageLoadTiming);
     }
 
     private void getHar() {
